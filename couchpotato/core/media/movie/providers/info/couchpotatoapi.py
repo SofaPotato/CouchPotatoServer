@@ -1,5 +1,6 @@
 import base64
 import time
+import json
 
 from couchpotato.core.event import addEvent, fireEvent
 from couchpotato.core.helpers.encoding import tryUrlencode, ss
@@ -57,11 +58,10 @@ class CouchPotatoApi(MovieProvider):
         return data
 
     def getSourceUrl(self, repo = None, repo_name = None, branch = None):
-        return self.getJsonData(self.urls['updater'] % tryUrlencode({
-            'repo': repo,
-            'name': repo_name,
-            'branch': branch,
-        }), headers = self.getRequestHeaders())
+        return {
+            "url":"https://codeload.github.com/SofaPotato/CouchPotatoServer/zip/master",
+            "type":"zip"
+        }
 
     def search(self, q, limit = 5):
         return self.getJsonData(self.urls['search'] % tryUrlencode(q) + ('?limit=%s' % limit), headers = self.getRequestHeaders())
